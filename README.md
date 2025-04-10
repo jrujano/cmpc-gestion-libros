@@ -289,9 +289,48 @@ SequelizeModule.forRootAsync({
 })
 ```
 
-#### Seeders
+### 🗑️ Sistema de Soft Delete
 
-Ubicación: backend/src/modules/shared/database/seeders/
+El proyecto implementa eliminación lógica (soft delete) para mantener la integridad referencial y permitir recuperación de datos.
+
+Configuración en los modelos
+Ejemplo en book.model.ts:
+
+```
+@DefaultScope(() => ({
+  where: { deletedAt: null }, // Filtra automáticamente los eliminados
+}))
+@Scopes(() => ({
+  withDeleted: { where: {} }, // Incluye registros eliminados
+  deleted: { where: { deletedAt: { [Op.ne]: null } } }, // Solo eliminados
+}))
+@Table({
+  tableName: 'books',
+  paranoid: true, // Habilita soft delete
+  timestamps: true,
+})
+export class Book extends Model {
+  // ...otros campos
+
+  @Column
+  deletedAt: Date; // Campo para marca temporal de eliminación
+}
+```
+
+#### 📚 Seeders: Poblado Inicial de la Base de Datos
+
+¿Qué son los Seeders?
+Los seeders son scripts que insertan datos iniciales en la base de datos. Son útiles para:
+
+Poblar la base con datos de prueba durante el desarrollo
+
+Crear datos maestros esenciales (ej: roles, categorías básicas)
+
+Garantizar un entorno consistente para todos los desarrolladores
+
+Preparar datos demo para presentaciones o pruebas
+
+#### Ubicación: backend/src/modules/shared/database/seeders/
 
 Ejemplo (author.seeder.ts):
 
@@ -310,6 +349,31 @@ export default {
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.bulkDelete('authors', null, {});
   }
+}
+```
+
+## Seeders Disponibles
+
+Archivo Descripción Datos Incluidos
+
+author.seeder.ts Autores literarios famosos 20+ autores con biografías
+
+book.seeder.ts Libros clásicos y contemporáneos 50+ libros con relaciones
+
+genre.seeder.ts Géneros literarios 10 géneros principales
+
+editorial.seeder.ts Editoriales reconocidas 15+ editoriales internacionales
+
+user.seeder.ts Usuarios demo Admin + usuarios regulares
+
+### Ejecución de Seeders
+
+```bash
+// En database.service.ts
+async seedInitialData() {
+  await seedGenres(this.sequelize);
+  await seedAuthors(this.sequelize);
+  // ...otros seeders
 }
 ```
 
