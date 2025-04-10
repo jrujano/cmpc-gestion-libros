@@ -15,10 +15,9 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { JwtAuthGuard } from '../../core/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
-@ApiTags('books')
-// @ApiBearerAuth()
 @Controller('customers')
-@UseGuards(JwtAuthGuard)
+@ApiBearerAuth('access-token') // Vinculamos con el esquema configurado en Swagger
+@UseGuards(JwtAuthGuard) // Protegemos los endpoints con el guard de JWT
 export class CustomerController {
   constructor(private readonly customersService: CustomerService) {}
 

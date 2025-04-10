@@ -7,13 +7,17 @@ import {
   Put,
   Query,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { EditorialsService } from './editorials.service';
 import { CreateEditorialDto } from './dto/create-editorial.dto';
 import { UpdateEditorialDto } from './dto/update-editorial.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/guards/jwt-auth.guard';
 
 @ApiTags('editorials')
+@ApiBearerAuth('access-token') // Vinculamos con el esquema configurado en Swagger
+@UseGuards(JwtAuthGuard) // Protegemos los endpoints con el guard de JWT
 @Controller('editorials')
 export class EditorialsController {
   constructor(private readonly editorialsService: EditorialsService) {}

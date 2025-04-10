@@ -6,13 +6,17 @@ import {
   Param,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthorsService } from './authors.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/guards/jwt-auth.guard';
 
 @ApiTags('authors')
+@ApiBearerAuth('access-token') // Vinculamos con el esquema configurado en Swagger
+@UseGuards(JwtAuthGuard) // Protegemos los endpoints con el guard de JWT
 @Controller('authors')
 export class AuthorsController {
   constructor(private readonly authorsService: AuthorsService) {}
