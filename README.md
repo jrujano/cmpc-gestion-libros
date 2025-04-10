@@ -270,6 +270,8 @@ Endpoint: GET /books/export
 Genera un archivo CSV con todos los libros
 
 ### 🗃️ Base de Datos
+![Selección_512](https://github.com/user-attachments/assets/73d44d1e-bc3e-4448-96eb-a1a371e486ce)
+
 
 ```bash
 SequelizeModule.forRootAsync({
@@ -406,6 +408,7 @@ async createWithAuthors(createDto: CreateBookDto) {
 ---
 
 ## 🖥️ Frontend - Características Clave
+![Selección_511](https://github.com/user-attachments/assets/e8354d27-485e-4fda-9306-a324b38450cf)
 
 ```bash
 src/
