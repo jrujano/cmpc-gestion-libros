@@ -405,6 +405,56 @@ async createWithAuthors(createDto: CreateBookDto) {
 
 ```
 
+### 📝 Sistema de Logs y Auditoría
+
+El backend implementa un sistema completo de logging con:
+
+#### 1. Logger Global (Interceptor)
+
+```bash
+// audit.interceptor.ts
+@Injectable()
+export class AuditInterceptor implements NestInterceptor {
+  private readonly logger = new Logger('Audit');
+
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const request = context.switchToHttp().getRequest();
+    this.logger.log(`Request: ${request.method} ${request.url}`);
+
+    return next.handle().pipe(
+      tap(() => this.logger.log(`Response: ${request.method} ${request.url}`))
+    );
+  }
+}
+```
+
+##### Ejemplo de log:
+
+```bash
+[Audit] Request: POST /books
+[Audit] Response: POST /books (201)
+```
+
+#### 2. Loggers Específicos por Servicio
+
+```bash
+// books.service.ts
+export class BooksService {
+  private readonly logger = new Logger(BooksService.name);
+
+  async createBook(dto: CreateBookDto) {
+    this.logger.log(`Creando libro: ${dto.title}`);
+    // ...
+  }
+}
+```
+
+##### Ejemplo de log:
+
+```bash
+[BooksService] Creando libro: "Cien años de soledad"
+```
+
 ---
 
 ## 🖥️ Frontend - Características Clave
