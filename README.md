@@ -26,7 +26,7 @@ Proyecto fullstack para la gestión de libros, desarrollado con **NestJS**, **Re
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Estructura del Proyecto Backend
 
 ```bash
 .
