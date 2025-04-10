@@ -455,6 +455,52 @@ export class BooksService {
 [BooksService] Creando libro: "Cien años de soledad"
 ```
 
+### 🧪 Pruebas Unitarias en el Backend
+
+El proyecto incluye pruebas unitarias por ejemplo:
+
+```bash
+backend/
+├── src/
+│   ├── modules/
+│   │   ├── authors/
+│   │   │   ├── __tests__/
+│   │   │   │   ├── authors.service.spec.ts
+│   │   ├── books/
+│   │   │   ├── __tests__/
+│   │   │   │   ├── books.controller.spec.ts
+│   │   │   │   ├── books.service.spec.ts
+├── test/
+│   ├── app.e2e-spec.ts  # Pruebas E2E
+```
+
+#### 🚀 Ejecución de Pruebas
+
+Paso 1: Acceder al contenedor del backend
+
+```bash
+docker exec -it cmpc-libros-api bash
+```
+
+Paso 2: Ejecutar pruebas unitarias (dentro del contenedor)
+
+```bash
+# Todas las pruebas unitarias
+npm run test
+
+# Pruebas específicas de un módulo
+npm run test:watch -- modules/authors
+
+# Con cobertura de código
+npm run test:cov
+```
+
+Paso 3: Ejecutar pruebas E2E
+
+```bash
+npm run test:e2e
+```
+
 ---
 
 ## 🖥️ Frontend - Características Clave
