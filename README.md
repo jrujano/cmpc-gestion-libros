@@ -270,8 +270,8 @@ Endpoint: GET /books/export
 Genera un archivo CSV con todos los libros
 
 ### 🗃️ Base de Datos
-![Selección_512](https://github.com/user-attachments/assets/73d44d1e-bc3e-4448-96eb-a1a371e486ce)
 
+![Selección_512](https://github.com/user-attachments/assets/73d44d1e-bc3e-4448-96eb-a1a371e486ce)
 
 ```bash
 SequelizeModule.forRootAsync({
@@ -408,6 +408,7 @@ async createWithAuthors(createDto: CreateBookDto) {
 ---
 
 ## 🖥️ Frontend - Características Clave
+
 ![Selección_511](https://github.com/user-attachments/assets/e8354d27-485e-4fda-9306-a324b38450cf)
 
 ```bash
@@ -506,3 +507,99 @@ services:
 ```
 
 ---
+
+## Análisis de la Estructura de la Base de Datos
+
+![Selección_512](https://github.com/user-attachments/assets/73d44d1e-bc3e-4448-96eb-a1a371e486ce)
+
+### 1. Estructura General
+
+La base de datos está diseñada para un sistema de gestión de librería con las siguientes características principales:
+
+### Modelo relacional normalizado
+
+11 tablas principales (5 entidades principales y 6 tablas de relación/seguimiento)
+
+3 vistas para reportes comunes
+
+2 triggers con funciones asociadas para automatizar procesos
+
+### 2. Tablas Principales
+
+Entidades Básicas:
+editorial: Almacena información de las editoriales de los libros
+
+genero: Catálogo de géneros literarios
+
+autor: Información de los autores
+
+libro: Datos principales de los libros (entidad central del sistema)
+
+cliente: Registro de clientes de la librería
+
+usuario: Usuarios del sistema con roles definidos
+
+Tablas de Relación/Operativas:
+libro_autor: Relación muchos-a-muchos entre libros y autores
+
+venta: Registro de ventas
+
+detalle_venta: Items de cada venta
+
+inventario: Histórico de movimientos de stock
+
+### 3. Relaciones Clave
+
+Libro → Editorial: Muchos libros pertenecen a una editorial (N:1)
+
+Libro → Género: Muchos libros pertenecen a un género (N:1)
+
+Libro ↔ Autor: Relación muchos-a-muchos a través de libro_autor
+
+Venta → Cliente: Una venta pertenece a un cliente (N:1)
+
+DetalleVenta → Venta + Libro: Cada detalle relaciona un libro con una venta
+
+### Características Destacables
+
+Integridad Referencial:
+Uso extensivo de FOREIGN KEY constraints
+
+ON DELETE CASCADE en relaciones apropiadas (ej: libro_autor)
+
+Validación de Datos:
+CHECK constraints para campos como:
+
+venta.estado (valores específicos)
+
+inventario.tipo (entrada/salida/ajuste)
+
+usuario.rol (admin/inventario/ventas)
+
+Automatización:
+Triggers para:
+
+Actualizar stock automáticamente al registrar ventas
+
+Registrar movimientos de inventario cuando cambia el stock
+
+Valores por defecto:
+
+stock en libros (default 0)
+
+fecha_registro en varias tablas (CURRENT_TIMESTAMP)
+
+5. Optimización
+   Índices:
+   Índices B-tree para búsquedas frecuentes (título, precio, stock)
+
+Índice GIN para búsqueda de texto completo en título y descripción
+
+Índices en campos de relación (id_cliente en venta)
+
+Vistas:
+vw_inventario_actual: Stock actual con información relacionada
+
+vw_ventas_por_libro: Estadísticas de ventas por libro
+
+vw_movimientos_inventario: Historial de movimientos con cálculo de stock anterior
