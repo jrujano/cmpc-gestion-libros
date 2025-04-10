@@ -71,7 +71,7 @@ const BooksPage = () => {
         </div>
       ) : (
         <>
-          <BooksList books={books} />
+          <BooksList books={books}   token={token}  />
           <div className="mt-6">
             <Pagination 
               currentPage={page} 

@@ -65,16 +65,17 @@ export class BooksController {
     const csvStream = fastCsv.format({ headers: true });
     books.data.forEach((book) => {
       console.log(book);
+      const bookPlain = book.toJSON(); // Convierte a JSON plano
       csvStream.write({
-        ID: book.id,
-        Título: book.title,
-        ISBN: book.ISBN,
-        Descripción: book.description,
-        Precio: book.price,
-        Stock: book.stock,
-        'Fecha de Publicación': book.publicationDate?.toISOString(),
-        'ID Género': book.genreId,
-        'ID Editorial': book.editorialId,
+        ID: bookPlain.id,
+        Título: bookPlain.title,
+        ISBN: bookPlain.ISBN,
+        Descripción: bookPlain.description,
+        Precio: bookPlain.price,
+        Stock: bookPlain.stock,
+        'Fecha de Publicación': bookPlain.publicationDate?.toISOString(),
+        'ID Género': bookPlain.genreId,
+        'ID Editorial': bookPlain.editorialId,
       });
     });
 

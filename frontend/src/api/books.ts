@@ -47,3 +47,13 @@ export const updateBook = async (id: number, book: FormData): Promise<Book> => {
 export const deleteBook = async (id: number): Promise<void> => {
   await axios.delete(`${API_URL}/${id}`);
 };
+
+export const exportBooksToCSV = async (token: string): Promise<Blob> => {
+  const response = await axios.get(`${API_URL}/export`, {
+    responseType: "blob", // Important for file downloads
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+  return response.data;
+};
