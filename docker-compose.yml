@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: user_cmpc_book
+      POSTGRES_PASSWORD: 5L79D32cAiHw
+      POSTGRES_DB: db_cmpc_books
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: cmpc-libros-api
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: user_cmpc_book
+      DB_PASS: 5L79D32cAiHw
+      DB_NAME: db_cmpc_books
+      NODE_ENV: development
+    volumes:
+      - ./backend:/app
+    ports:
+      - "3000:3000"
+    command: npm run start:dev
+
+  frontend:
+    build: ./frontend
+    container_name: react_frontend
+    restart: always
+    depends_on:
+      - backend
+    volumes:
+      # Evita sobrescribir los node_modules del contenedor
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+
+    command: npm run dev -- --host
+volumes:
+  postgres_data:

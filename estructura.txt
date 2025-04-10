@@ -1,0 +1,213 @@
+.
+├── backend
+│   ├── Dockerfile
+│   ├── eslint.config.mjs
+│   ├── logger.config.ts
+│   ├── nest-cli.json
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── README.md
+│   ├── src
+│   │   ├── app.controller.spec.ts
+│   │   ├── app.controller.ts
+│   │   ├── app.module.ts
+│   │   ├── app.service.ts
+│   │   ├── core
+│   │   │   ├── decorators
+│   │   │   │   ├── public.decorator.ts
+│   │   │   │   └── roles.decorator.ts
+│   │   │   ├── exceptions
+│   │   │   ├── guards
+│   │   │   │   ├── jwt-auth.guard.ts
+│   │   │   │   ├── local-auth.guard.ts
+│   │   │   │   ├── refresh-jwt.guard.ts
+│   │   │   │   └── roles.guard.ts
+│   │   │   ├── interceptor
+│   │   │   │   └── audit.interceptor.ts
+│   │   │   └── interfaces
+│   │   │       ├── request-with-user.interface.ts
+│   │   │       └── user-payload.interface.ts
+│   │   ├── main.ts
+│   │   └── modules
+│   │       ├── auth
+│   │       │   ├── auth.controller.ts
+│   │       │   ├── auth.module.ts
+│   │       │   ├── auth.service.ts
+│   │       │   ├── dto
+│   │       │   │   ├── auth-response.dto.ts
+│   │       │   │   ├── token-response.dto.ts
+│   │       │   │   └── user-response.dto.ts
+│   │       │   └── strategies
+│   │       │       ├── jwt.strategy.ts
+│   │       │       ├── local.strategy.ts
+│   │       │       └── refresh-jwt.strategy.ts
+│   │       ├── authors
+│   │       │   ├── authors.controller.ts
+│   │       │   ├── authors.module.ts
+│   │       │   ├── authors.service.ts
+│   │       │   ├── dto
+│   │       │   │   ├── create-author.dto.ts
+│   │       │   │   └── update-author.dto.ts
+│   │       │   └── models
+│   │       │       └── author.model.ts
+│   │       ├── books
+│   │       │   ├── books.controller.ts
+│   │       │   ├── books.module.ts
+│   │       │   ├── books.service.ts
+│   │       │   ├── dto
+│   │       │   │   ├── create-book.dto.ts
+│   │       │   │   └── update-book.dto.ts
+│   │       │   └── models
+│   │       │       ├── book-author.model.ts
+│   │       │       └── book.model.ts
+│   │       ├── customers
+│   │       │   ├── customer.controller.ts
+│   │       │   ├── customer.module.ts
+│   │       │   ├── customer.service.ts
+│   │       │   ├── dto
+│   │       │   │   ├── create-customer.dto.ts
+│   │       │   │   ├── customer-response.dto.ts
+│   │       │   │   └── update-customer.dto.ts
+│   │       │   └── models
+│   │       │       └── customers.model.ts
+│   │       ├── editorials
+│   │       │   ├── dto
+│   │       │   │   ├── create-editorial.dto.ts
+│   │       │   │   └── update-editorial.dto.ts
+│   │       │   ├── editorials.controller.ts
+│   │       │   ├── editorials.module.ts
+│   │       │   ├── editorials.service.ts
+│   │       │   └── models
+│   │       │       └── editorial.model.ts
+│   │       ├── genres
+│   │       │   ├── dto
+│   │       │   │   ├── create-genre.dto.ts
+│   │       │   │   └── update-genre.dto.ts
+│   │       │   ├── genres.controller.ts
+│   │       │   ├── genres.module.ts
+│   │       │   ├── genres.service.ts
+│   │       │   └── models
+│   │       │       └── genre.model.ts
+│   │       ├── inventory
+│   │       │   ├── constants
+│   │       │   │   └── inventory.constants.ts
+│   │       │   ├── dto
+│   │       │   │   ├── create-inventory.dto.ts
+│   │       │   │   ├── inventory-filter.dto.ts
+│   │       │   │   ├── inventory-report.dto.ts
+│   │       │   │   ├── inventory-response.dto.ts
+│   │       │   │   └── update-inventory.dto.ts
+│   │       │   ├── interfaces
+│   │       │   │   └── inventory.interface.ts
+│   │       │   ├── inventory.controller.ts
+│   │       │   ├── inventory.module.ts
+│   │       │   ├── inventory.service.ts
+│   │       │   └── models
+│   │       │       └── inventory.model.ts
+│   │       ├── shared
+│   │       │   └── database
+│   │       │       ├── database.module.ts
+│   │       │       ├── database.service.ts
+│   │       │       ├── models
+│   │       │       └── seeders
+│   │       │           ├── author.seeder.ts
+│   │       │           ├── book-author.seeder.ts
+│   │       │           ├── book.seeder.ts
+│   │       │           ├── customer.seeder.ts
+│   │       │           ├── editorial.seeder.ts
+│   │       │           ├── genre.seeder.ts
+│   │       │           └── index.ts
+│   │       └── users
+│   │           ├── dto
+│   │           │   ├── create-user.dto.ts
+│   │           │   ├── login-user.dto.ts
+│   │           │   ├── update-user.dto.ts
+│   │           │   └── user-response.dto.ts
+│   │           ├── models
+│   │           │   ├── user.model.ts
+│   │           │   └── user-role.enum.ts
+│   │           ├── users.controller.ts
+│   │           ├── users.module.ts
+│   │           └── users.service.ts
+│   ├── test
+│   │   ├── app.e2e-spec.ts
+│   │   └── jest-e2e.json
+│   ├── tsconfig.build.json
+│   └── tsconfig.json
+├── bd.sql
+├── docker-compose.yml
+├── estructura.txt
+├── frontend
+│   ├── Dockerfile
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── postcss.config.js
+│   ├── public
+│   │   └── vite.svg
+│   ├── README.md
+│   ├── src
+│   │   ├── api
+│   │   │   ├── authors.ts
+│   │   │   ├── auth.ts
+│   │   │   ├── books.ts
+│   │   │   ├── editorials.ts
+│   │   │   ├── genres.ts
+│   │   │   └── index.ts
+│   │   ├── App.css
+│   │   ├── App.tsx
+│   │   ├── assets
+│   │   │   └── react.svg
+│   │   ├── components
+│   │   │   ├── auth
+│   │   │   │   └── LoginForm.tsx
+│   │   │   ├── books
+│   │   │   │   ├── BookCard.tsx
+│   │   │   │   ├── BookDetails.tsx
+│   │   │   │   ├── BookFilters.tsx
+│   │   │   │   ├── BookForm.tsx
+│   │   │   │   └── BooksList.tsx
+│   │   │   ├── common
+│   │   │   │   ├── LoadingSpinner.tsx
+│   │   │   │   ├── Pagination.tsx
+│   │   │   │   └── ProtectedRoute.tsx
+│   │   │   └── layout
+│   │   │       ├── Header.tsx
+│   │   │       ├── index.tsx
+│   │   │       └── Sidebar.tsx
+│   │   ├── context
+│   │   │   └── AuthContext.tsx
+│   │   ├── hooks
+│   │   │   ├── useAuth.ts
+│   │   │   ├── useDebounce.ts
+│   │   │   └── usePagination.ts
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   ├── pages
+│   │   │   ├── AdminPanel.tsx
+│   │   │   ├── Auth
+│   │   │   │   └── LoginPage.tsx
+│   │   │   ├── Books
+│   │   │   │   ├── BookDetailPage.tsx
+│   │   │   │   ├── BookEditPage.tsx
+│   │   │   │   ├── BookNewPage.tsx
+│   │   │   │   └── BooksPage.tsx
+│   │   │   ├── Dashboard.tsx
+│   │   │   └── NotFound.tsx
+│   │   ├── types
+│   │   │   └── index.ts
+│   │   ├── utils
+│   │   │   ├── constants.ts
+│   │   │   └── helpers.ts
+│   │   └── vite-env.d.ts
+│   ├── tailwind.config.js
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
+├── package.json
+├── package-lock.json
+└── squema.csv
+
+58 directories, 153 files
