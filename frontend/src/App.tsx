@@ -34,6 +34,7 @@ function App() {
 
               <Route path="/books" element={<BooksPage />} />
               <Route path="/books/create" element={<BookNewPage />} />
+              <Route path="/books/:id/edit" element={<BookNewPage />} />
 
               <Route path="/books/:id" element={<BookDetailPage />} />
               

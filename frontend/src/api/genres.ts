@@ -1,10 +1,15 @@
 import axios from 'axios';
 import { Genre } from '../types';
 
-const API_URL = 'http://localhost:3000/api/genres';
+const API_URL = 'http://localhost:3000/genres';
 
-export const getGenres = async (): Promise<Genre[]> => {
-  const response = await axios.get<Genre[]>(API_URL);
+export const getGenres = async (token:string): Promise<Genre[]> => {
+  const response = await axios.get<Genre[]>(API_URL,{
+      
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "", // Enviar el token si existe
+    },
+  });
   return response.data;
 };
 

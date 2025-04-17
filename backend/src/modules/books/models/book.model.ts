@@ -71,7 +71,7 @@ export class Book extends Model {
   })
   editorial: Editorial;
 
-  @Column({ type: DataType.STRING(255) })
+  @Column({ type: DataType.TEXT })
   coverImage: string;
 
   @Column({ type: DataType.STRING(20) })

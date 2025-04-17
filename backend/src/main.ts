@@ -5,10 +5,11 @@ import { DatabaseService } from './modules/shared/database/database.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {});
-  // Cors
-  app.enableCors({
-    origin: true, // <- permite cualquier origen
-    credentials: true, // si usas cookies, tokens, etc.
+   // Habilitar CORS
+   app.enableCors({
+    origin: ['http://localhost:5173', 'https://localhost:5173', 'https://127.0.0.1:5173'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
   });
 
   // SwaggerModule
@@ -35,6 +36,7 @@ async function bootstrap() {
   // Inicializa la base de datos y seeders
   const databaseService = app.get(DatabaseService);
   await databaseService.onModuleInit();
+  
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

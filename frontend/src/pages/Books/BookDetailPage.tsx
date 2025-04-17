@@ -3,8 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import { getBookById } from '../../api/books';
 import { Book } from '../../types';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { useAuth } from '../../context/AuthContext';
 
 const BookDetailPage = () => {
+    const { token } = useAuth();
+  
   const { id } = useParams<{ id: string }>();
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +17,7 @@ const BookDetailPage = () => {
     const fetchBook = async () => {
       try {
         setLoading(true);
-        const bookData = await getBookById(Number(id));
+        const bookData = await getBookById(Number(id),token);
         setBook(bookData);
       } catch (err) {
         setError('Failed to load book details');
@@ -39,7 +42,7 @@ const BookDetailPage = () => {
           to={`/books/${book.id}/edit`} 
           className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
         >
-          Edit Book
+          Editar
         </Link>
       </div>
 
@@ -47,22 +50,22 @@ const BookDetailPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
             <div className="mb-4">
-              <h2 className="text-lg font-semibold mb-2">Details</h2>
+              <h2 className="text-lg font-semibold mb-2">Detalles</h2>
               <p><span className="font-medium">ISBN:</span> {book.ISBN || 'N/A'}</p>
-              <p><span className="font-medium">Price:</span> ${book.price.toFixed(2)}</p>
+              <p><span className="font-medium">Precio:</span> ${book.price}</p>
               <p><span className="font-medium">Stock:</span> {book.stock || 0}</p>
-              <p><span className="font-medium">Genre:</span> {book.genre?.name || 'N/A'}</p>
+              <p><span className="font-medium">Genero:</span> {book.genre?.name || 'N/A'}</p>
               <p><span className="font-medium">Editorial:</span> {book.editorial?.name || 'N/A'}</p>
             </div>
 
             <div className="mb-4">
-              <h2 className="text-lg font-semibold mb-2">Description</h2>
+              <h2 className="text-lg font-semibold mb-2">Descripción</h2>
               <p className="text-gray-700">{book.description || 'No description available'}</p>
             </div>
 
             {book.authors && book.authors.length > 0 && (
               <div>
-                <h2 className="text-lg font-semibold mb-2">Authors</h2>
+                <h2 className="text-lg font-semibold mb-2">Autor(es)</h2>
                 <ul className="list-disc pl-5">
                   {book.authors.map(author => (
                     <li key={author.id}>{author.name}</li>

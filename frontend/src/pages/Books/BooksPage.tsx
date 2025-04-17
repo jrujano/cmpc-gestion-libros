@@ -8,12 +8,14 @@ import { Book, BookFilters as BookFiltersType } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 
 const BooksPage = () => {
-   const { token } = useAuth();
+  const { token } = useAuth();
   const [books, setBooks] =  useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [refreshKey, setRefreshKey] = useState(0);
+
   const [filters, setFilters] = useState<BookFiltersType>({
     // genre: '',
     // editorial: '',
@@ -25,6 +27,12 @@ const BooksPage = () => {
   });
 
   const debouncedSearch = useDebounce(filters.search, 500);
+
+  const handleDeleteSuccess = () => {
+    setRefreshKey(prev => prev + 1); // Esto forzará un nuevo fetch de los libros
+    setPage(1); // Opcional: volver a la primera página
+  };
+
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -45,7 +53,7 @@ const BooksPage = () => {
     };
 
     fetchBooks();
-  }, [filters, debouncedSearch, page]);
+  }, [filters, debouncedSearch, page,refreshKey]);
 
   const handleFilterChange = (newFilters: Partial<BookFiltersType>) => {
     setFilters(prev => ({ ...prev, ...newFilters }));
@@ -71,7 +79,7 @@ const BooksPage = () => {
         </div>
       ) : (
         <>
-          <BooksList books={books}   token={token}  />
+          <BooksList books={books}   token={token}  onDeleteSuccess={handleDeleteSuccess}  />
           <div className="mt-6">
             <Pagination 
               currentPage={page} 

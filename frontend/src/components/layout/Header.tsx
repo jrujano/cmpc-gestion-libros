@@ -20,7 +20,7 @@ const Header = ({ setSidebarOpen }: HeaderProps) => {
         </svg>
       </button>
 
-      <h1 className="text-xl font-semibold">Dashboard</h1>
+      <h1 className="text-xl font-semibold">CMPC</h1>
       <h2> {user?.name}</h2>
     </header>
   );

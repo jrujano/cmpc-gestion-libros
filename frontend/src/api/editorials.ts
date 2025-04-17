@@ -1,10 +1,15 @@
 import axios from "axios";
 import { Editorial } from "../types";
 
-const API_URL = "http://localhost:3000/api/editorials";
+const API_URL = "http://localhost:3000/editorials";
 
-export const getEditorials = async (): Promise<Editorial[]> => {
-  const response = await axios.get<Editorial[]>(API_URL);
+export const getEditorials = async (token: string): Promise<Editorial[]> => {
+  const response = await axios.get<Editorial[]>(API_URL,{
+      
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "", // Enviar el token si existe
+    },
+  });
   return response.data;
 };
 

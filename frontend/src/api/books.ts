@@ -21,31 +21,41 @@ export const getBooks = async (
   return response.data;
 };
 
-export const getBookById = async (id: number): Promise<Book> => {
-  const response = await axios.get<Book>(`${API_URL}/${id}`);
+export const getBookById = async (id: number, token:string): Promise<Book> => {
+  const response = await axios.get<Book>(`${API_URL}/${id}`,{
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "", // Enviar el token si existe
+    },
+  });
   return response.data;
 };
 
-export const createBook = async (book: FormData): Promise<Book> => {
+export const createBook = async (book: FormData, token: string): Promise<Book> => {
   const response = await axios.post<Book>(API_URL, book, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      Authorization: token ? `Bearer ${token}` : "", 
     },
   });
   return response.data;
 };
 
-export const updateBook = async (id: number, book: FormData): Promise<Book> => {
+
+
+export const updateBook = async (id: number, book: FormData, token: string): Promise<Book> => {
   const response = await axios.put<Book>(`${API_URL}/${id}`, book, {
     headers: {
-      "Content-Type": "multipart/form-data",
+           Authorization: token ? `Bearer ${token}` : "", 
     },
   });
   return response.data;
 };
 
-export const deleteBook = async (id: number): Promise<void> => {
-  await axios.delete(`${API_URL}/${id}`);
+export const deleteBook = async (id: number, token: string): Promise<void> => {
+  await axios.delete(`${API_URL}/${id}`,{
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
 };
 
 export const exportBooksToCSV = async (token: string): Promise<Blob> => {

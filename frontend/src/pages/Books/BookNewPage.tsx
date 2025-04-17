@@ -1,94 +1,97 @@
-// components/BookPage.tsx
+// pages/BookNewPage.tsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Book, Genre, Author, Editorial } from '../types/book';
-// import BookTable from './BookTable';
-// import BookForm from './BookForm';
-import  BookForm  from "../../components/books/BookForm";
-
-
+import { createBook, updateBook, getBookById } from '../../api/books';
+import BookForm from '../../components/books/BookForm';
 import { useAuth } from '../../context/AuthContext';
+
 const BookNewPage = () => {
   const { token } = useAuth();
-   const [editingBook, setEditingBook] = useState<Book | null>(null);
+  const { id } = useParams<{ id?: string }>();
+  const navigate = useNavigate();
+  const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [formLoading, setFormLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      
-    } catch (error) {
-      console.error('Error loading data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSave = async (book: Book) => {
-    try {
-      if (book.id) {
-        await updateBook(book.id, book);
+    // Determinar si estamos en modo edición
+    const editMode = location.pathname.includes('/edit');
+    console.log(editMode)
+    setIsEditing(editMode);
+    const loadBook = async () => {
+      if (editMode && id) {
+        try {
+          setIsLoading(true);
+          const book = await getBookById(parseInt(id),token);
+          setEditingBook(book);
+        } catch (error) {
+          console.error('Error loading book:', error);
+          navigate('/books', { replace: true });
+        } finally {
+          setIsLoading(false);
+        }
       } else {
-        await createBook(book);
-      }
-      loadData();
-      setEditingBook(null);
-    } catch (error) {
-      console.error('Error saving book:', error);
-    }
-  };
-
-  const handleDelete = async (id: number) => {
-    try {
-      await deleteBook(id);
-      loadData();
-    } catch (error) {
-      console.error('Error deleting book:', error);
-    }
-  };
-
-  if (isLoading) return <div>Loading...</div>;
-
-  return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Book Management</h1>
-      
-      <button 
-        onClick={() => setEditingBook({
+        setEditingBook({
           title: '',
           ISBN: '',
           description: '',
           price: 0,
           stock: 0,
           publicationDate: new Date().toISOString().split('T')[0],
-          genreId: genres[0]?.id || 0,
-          editorialId: editorials[0]?.id || 0,
+          genreId: 0,
+          editorialId: 0,
           coverImage: '',
           edition: '',
           pages: 0,
           authorIds: []
-        })}
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-      >
-        Add New Book
-      </button>
+        });
+        setIsLoading(false);
+      }
+    };
 
+    loadBook();
+  }, [id, navigate]);
+
+
+   const handleSubmit = async (formData: FormData) => {
+    try {
+      setFormLoading(true);
+      if (id) {
+        await updateBook(parseInt(id), formData, token);
+      } else {
+        await createBook(formData, token);
+      }
+      navigate('/books');
+    } catch (error) {
+      console.error('Error saving book:', error);
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  const handleCancel = () => {
+    navigate('/books'); // Vuelve a la lista de libros
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">
+        {id ? 'Editar Libro' : 'Crear Nuevo Libro'}
+      </h1>
+      
       {editingBook && (
-        // <BookForm
-        //   book={editingBook}
-        //   genres={genres}
-        //   authors={authors}
-        //   editorials={editorials}
-        //   onSave={handleSave}
-        //   onCancel={() => setEditingBook(null)}
-        // />
-        <BookForm></BookForm>
+       
+        <BookForm
+          onSubmit={handleSubmit}
+          initialData={editingBook}
+          loading={formLoading}
+          token={token}
+          onCancel={handleCancel} // Pasa la función de cancelar al formulario
+        />
       )}
-
-      <h2>Detalle</h2>
     </div>
   );
 };

@@ -16,14 +16,14 @@ const Sidebar = () => {
           className={({ isActive }) => `flex items-center px-4 py-3 rounded ${isActive ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
         >
           <HomeIcon className="h-5 w-5 mr-3" />
-          Dashboard
+          
         </NavLink>
         <NavLink 
           to="/books" 
           className={({ isActive }) => `flex items-center px-4 py-3 rounded ${isActive ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
         >
           <BookOpenIcon className="h-5 w-5 mr-3" />
-          Books
+          Listados de Libros
           <div className="absolute left-0 mt-1 bg-gray-800 w-full rounded-md shadow-lg">
             
           </div>
@@ -35,6 +35,7 @@ const Sidebar = () => {
           <BookOpenIcon className="h-5 w-5 mr-3" />
           Crear libro
         </NavLink>
+        {/* Aca se maneja con los roles  */}
         {user?.role === 'admin' && (
           <>
             <NavLink 

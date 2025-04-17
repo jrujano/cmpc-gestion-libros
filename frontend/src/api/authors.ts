@@ -1,11 +1,18 @@
 import axios from "axios";
 import { Author } from "../types";
 
-const API_URL = "http://localhost:3000/api/authors";
+const API_URL = "http://localhost:3000/authors";
 
-export const getAuthors = async (): Promise<Author[]> => {
-  const response = await axios.get<Author[]>(API_URL);
+export const getAuthors = async (token: string): Promise<Author[]> => {
+
+   const response = await axios.get<Author[]>(API_URL, {
+      
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "", // Enviar el token si existe
+      },
+    });
   return response.data;
+
 };
 
 export const getAuthorById = async (id: number): Promise<Author> => {

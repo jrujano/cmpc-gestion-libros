@@ -15,6 +15,7 @@ import { FindAndCountOptions, Op } from 'sequelize';
 import { BookAuthor } from './models/book-author.model';
 import { Genre } from '../genres/models/genre.model';
 import { Editorial } from '../editorials/models/editorial.model';
+import { Author } from '../authors/models/author.model';
 
 @Injectable()
 export class BooksService {
@@ -128,6 +129,11 @@ export class BooksService {
           model: Editorial,
           as: 'editorial',
         },
+        {
+          model: Author,
+          as: 'authors',
+        },
+
       ],
       paranoid: !includeDeleted,
       // Eliminamos raw: true para mantener la estructura de objetos anidada
@@ -155,7 +161,7 @@ export class BooksService {
   async findOne(id: number, includeDeleted: boolean = false): Promise<Book> {
     this.logger.log(`Buscando libro Id: ${id} `);
     const options: any = {
-      include: ['genre', 'editorial'],
+      include: ['genre', 'editorial','authors'],
     };
 
     if (includeDeleted) {
