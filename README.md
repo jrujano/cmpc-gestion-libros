@@ -179,7 +179,8 @@ Proyecto fullstack para la gestión de libros, desarrollado con **NestJS**, **Re
 ### Iniciar el proyecto
 
 ```bash
-docker-compose up --build
+docker-compose build --no-cache
+docker-compose up
 ```
 
 Los servicios estarán disponibles en:

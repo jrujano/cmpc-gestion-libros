@@ -27,8 +27,8 @@ services:
       DB_PASS: 5L79D32cAiHw
       DB_NAME: db_cmpc_books
       NODE_ENV: development
-    volumes:
-      - ./backend:/app
+    # volumes:
+    #   - ./backend:/app
     ports:
       - "3000:3000"
     command: npm run start:dev
@@ -39,10 +39,10 @@ services:
     restart: always
     depends_on:
       - backend
-    volumes:
-      # Evita sobrescribir los node_modules del contenedor
-      - ./frontend:/app
-      - /app/node_modules
+    # volumes:
+    #   # Evita sobrescribir los node_modules del contenedor
+    #   - ./frontend:/app
+    #   - /app/node_modules
     ports:
       - "5173:5173"
 
