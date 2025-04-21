@@ -1,9 +1,14 @@
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
+const API_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://0.0.0.0:3000/api'  // En Docker
+  : 'https://api.tudominio.com';  // En producción
+
 const api = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: API_URL,
 });
+
 
 // Request interceptor
 api.interceptors.request.use(

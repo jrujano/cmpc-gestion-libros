@@ -5,8 +5,10 @@ import { BooksModule } from './modules/books/books.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CustomerModule } from './modules/customers/customer.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
+import { SalesModule } from "./modules/sales/sales.module";
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuditInterceptor } from './core/interceptor/audit.interceptor';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,6 +21,7 @@ import { AuditInterceptor } from './core/interceptor/audit.interceptor';
     AuthModule,
     CustomerModule,
     InventoryModule,
+    SalesModule
   ],
   providers: [
     {

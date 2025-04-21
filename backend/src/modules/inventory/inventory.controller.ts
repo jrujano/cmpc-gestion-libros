@@ -9,15 +9,19 @@ import {
   Query,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
 import { InventoryFilterDto } from './dto/inventory-filter.dto';
 import { InventoryResponseDto } from './dto/inventory-response.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/guards/jwt-auth.guard';
 
-@ApiTags('Inventory')
+@ApiTags('Inventario')
+@ApiBearerAuth('access-token') 
+@UseGuards(JwtAuthGuard) 
 @Controller('inventory')
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}

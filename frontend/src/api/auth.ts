@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/auth";
+const API_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://0.0.0.0:3000/auth'  // En Docker
+  : 'https://api.tudominio.com';  // En producción
 
 interface LoginData {
   email: string;

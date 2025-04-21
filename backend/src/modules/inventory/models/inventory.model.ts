@@ -37,12 +37,12 @@ export class Inventory extends Model {
   })
   movementDate: Date;
 
-  @Column({
-    type: DataType.INTEGER,
-    field: 'movement_date',
-    allowNull: false,
-  })
-  movementDay: number; // Asumo que es un campo numérico basado en tu definición
+  // @Column({
+  //   type: DataType.INTEGER,
+  //   field: 'movement_date',
+  //   allowNull: false,
+  // })
+  // movementDay: number; // Asumo que es un campo numérico basado en tu 
 
   @Column({
     type: DataType.STRING(10),
@@ -51,6 +51,7 @@ export class Inventory extends Model {
   })
   type: string;
 
+  
   @Column({
     type: DataType.STRING(200),
     field: 'reason',
@@ -64,6 +65,16 @@ export class Inventory extends Model {
     allowNull: true,
   })
   responsibleUser: string;
+
+  @Column({
+    type: DataType.INTEGER,
+    field: 'amount',
+    allowNull: false,
+  })
+  amount: number;
+
+
+  
 
   @BelongsTo(() => Book)
   book: Book;

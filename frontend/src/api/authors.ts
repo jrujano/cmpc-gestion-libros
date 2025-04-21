@@ -1,8 +1,9 @@
 import axios from "axios";
 import { Author } from "../types";
 
-const API_URL = "http://localhost:3000/authors";
-
+const API_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://0.0.0.0:3000/authors'  // En Docker
+  : 'https://api.tudominio.com';  // En producción
 export const getAuthors = async (token: string): Promise<Author[]> => {
 
    const response = await axios.get<Author[]>(API_URL, {

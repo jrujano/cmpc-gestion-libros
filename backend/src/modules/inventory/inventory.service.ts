@@ -11,6 +11,7 @@ import { FindOptions, Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { Book } from '../books/models/book.model';
 import { InventoryReportDto } from './dto/inventory-report.dto';
+import { Transaction } from 'sequelize';
 
 @Injectable()
 export class InventoryService {
@@ -19,8 +20,8 @@ export class InventoryService {
     private readonly inventoryModel: typeof Inventory,
   ) {}
 
-  async create(createInventoryDto: CreateInventoryDto): Promise<Inventory> {
-    return this.inventoryModel.create(createInventoryDto as any);
+  async create(createInventoryDto: CreateInventoryDto, options?: { transaction?: Transaction }): Promise<Inventory> {
+    return this.inventoryModel.create(createInventoryDto as any, options);
   }
 
   async update(

@@ -1,7 +1,10 @@
 import axios from "axios";
 import { Editorial } from "../types";
 
-const API_URL = "http://localhost:3000/editorials";
+
+const API_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://0.0.0.0:3000/editorials'  // En Docker
+  : 'https://api.tudominio.com';  // En producción
 
 export const getEditorials = async (token: string): Promise<Editorial[]> => {
   const response = await axios.get<Editorial[]>(API_URL,{

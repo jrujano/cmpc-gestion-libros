@@ -4,12 +4,13 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { DatabaseService } from './modules/shared/database/database.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {});
+  const app = await NestFactory.create(AppModule, { bodyParser: true });
    // Habilitar CORS
    app.enableCors({
-    origin: ['http://localhost:5173', 'https://localhost:5173', 'https://127.0.0.1:5173'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
+    origin: true, 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,  // Necesario para cookies/JWT
+
   });
 
   // SwaggerModule
@@ -37,6 +38,7 @@ async function bootstrap() {
   const databaseService = app.get(DatabaseService);
   await databaseService.onModuleInit();
   
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(3000, '0.0.0.0');
+  
 }
 bootstrap();

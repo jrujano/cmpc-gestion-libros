@@ -16,12 +16,16 @@ import { BookAuthor } from './models/book-author.model';
 import { Genre } from '../genres/models/genre.model';
 import { Editorial } from '../editorials/models/editorial.model';
 import { Author } from '../authors/models/author.model';
+import { InventoryService } from '../inventory/inventory.service';
+import { User } from '../users/models/user.model';
 
 @Injectable()
 export class BooksService {
   // Log de Operaciones
   private readonly logger = new Logger(BooksService.name);
   constructor(
+    private readonly inventoryService: InventoryService,
+
     @InjectModel(Book)
     private readonly bookModel: typeof Book,
     @InjectModel(BookAuthor)
@@ -30,7 +34,7 @@ export class BooksService {
     private readonly sequelize: Sequelize,
   ) {}
 
-  async create(createBookDto: CreateBookDto): Promise<Book> {
+  async create(createBookDto: CreateBookDto, currentUser?: User, ): Promise<Book> {
     const transaction = await this.sequelize.transaction();
 
     try {
@@ -82,7 +86,20 @@ export class BooksService {
           transaction,
         });
       }
+      if (createBookDto.stock && createBookDto.stock > 0) {
+        const createInventoryDto = {
+          bookId: book.id, // assuming the book has an id
+          type: 'ENTRY',
+          reason: 'Initial book entry',
+          responsibleUser: currentUser?.email || 'system',
+          amount : createBookDto.stock,
+        };
+        console.log('createInventoryDto', createInventoryDto);
+        await this.inventoryService.create(createInventoryDto, 
+          { transaction },); // Pass transaction
 
+      }
+    
       await transaction.commit(); // Confirmar la transacción
       return book;
     } catch (error) {

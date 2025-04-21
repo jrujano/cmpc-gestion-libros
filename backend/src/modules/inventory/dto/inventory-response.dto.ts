@@ -10,8 +10,8 @@ export class InventoryResponseDto {
   @ApiProperty()
   movementDate: Date;
 
-  @ApiProperty()
-  movementDay: number;
+  // @ApiProperty()
+  // movementDay: number;
 
   @ApiProperty({
     enum: ['ENTRY', 'EXIT', 'TRANSFER', 'ADJUSTMENT'],

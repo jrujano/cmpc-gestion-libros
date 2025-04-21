@@ -2,10 +2,11 @@ export interface IInventory {
   idMovement?: number;
   bookId?: number;
   movementDate?: Date;
-  movementDay: number;
+  movementDay?: number;
   type?: string;
   reason?: string;
   responsibleUser?: string;
+  amount: number;
 }
 
 export enum InventoryMovementType {

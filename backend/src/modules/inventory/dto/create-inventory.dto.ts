@@ -7,7 +7,7 @@ export class CreateInventoryDto {
   bookId?: number;
 
   @IsNumber()
-  movementDay: number;
+  amount: number;
 
   @IsOptional()
   @IsEnum(InventoryMovementType)

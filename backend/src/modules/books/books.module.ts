@@ -8,12 +8,14 @@ import { GenresModule } from '../genres/genres.module';
 import { EditorialsModule } from '../editorials/editorials.module';
 import { DatabaseModule } from '../shared/database/database.module';
 import { CustomerModule } from '../customers/customer.module';
+import {  InventoryModule} from "../inventory/inventory.module";
 
 @Module({
   imports: [
     SequelizeModule.forFeature([Book]),
     AuthorsModule,
     GenresModule,
+    InventoryModule,
     EditorialsModule,
     DatabaseModule,
     CustomerModule,

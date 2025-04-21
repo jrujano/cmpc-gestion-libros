@@ -17,6 +17,8 @@ import { JwtAuthGuard } from '../../core/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { Response } from 'express';
 import * as fastCsv from 'fast-csv';
+import { CurrentUser } from '../../core/decorators/current-user.decorator';
+import { User } from '../users/models/user.model';
 
 @ApiTags('libros')
 @ApiBearerAuth('access-token') // Vinculamos con el esquema configurado en Swagger
@@ -27,8 +29,9 @@ export class BooksController {
 
   @Post()
   @ApiResponse({ status: 201, description: 'Book successfully created' })
-  create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto);
+  
+  create(@Body() createBookDto: CreateBookDto, @CurrentUser() user: User ) {
+    return this.booksService.create(createBookDto,user);
   }
   // Manejamos paginado y filtrado
   @Get()

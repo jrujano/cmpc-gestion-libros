@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { Genre } from '../types';
 
-const API_URL = 'http://localhost:3000/genres';
-
+const API_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://0.0.0.0:3000/genres'  // En Docker
+  : 'https://api.tudominio.com';  // En producción
 export const getGenres = async (token:string): Promise<Genre[]> => {
   const response = await axios.get<Genre[]>(API_URL,{
       

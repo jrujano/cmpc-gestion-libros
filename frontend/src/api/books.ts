@@ -1,8 +1,9 @@
 import axios from "axios";
 import { Book, BookFilters, PaginatedResponse } from "../types";
 
-const API_URL = "http://localhost:3000/books";
-
+const API_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://0.0.0.0:3000/books'  // En Docker
+  : 'https://api.tudominio.com';  // En producción
 export const getBooks = async (
   filters: BookFilters,
   page: number = 1,
